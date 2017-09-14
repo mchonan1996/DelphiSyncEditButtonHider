@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delphi SyncEdit Button Hider", "DelphiFixer\Delphi SyncEdit Button Hider.csproj", "{D7BA4A5E-CE0B-46C4-8C64-1396D47C13F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delphi SyncEdit Button Hider", "DelphiSyncEditButtonHider\Delphi SyncEdit Button Hider.csproj", "{D7BA4A5E-CE0B-46C4-8C64-1396D47C13F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
