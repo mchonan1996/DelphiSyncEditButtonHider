@@ -25,45 +25,50 @@ namespace DelphiSyncEditButtonHider.Classes {
         private const int SW_HIDE = 0;
 
         public void DoHideSyncButton() {
-            var hwnd = FindWindow("TAppBuilder", null);
+            try {
+                var hwnd = FindWindow("TAppBuilder", null);
 
-            if (hwnd == 0) {
-                // Delphi not open.
-                return;
+                if (hwnd == 0) {
+                    // Delphi not open.
+                    return;
+                }
+                var activeWindow = GetForegroundWindow();
+                if (hwnd != activeWindow) {
+                    // Delphi isn't active, no point wasting resources.
+                    return;
+                }
+
+                var level1 = FindWindowEx(hwnd, 0, "TEditorDockPanel", null);
+                var level2 = FindWindowEx(level1, 0, "TEditWindow", null);
+                var level3 = FindWindowEx(level2, 0, "TPanel", null);
+                var level4 = FindWindowEx(level3, 0, "TPanel", null);
+
+                var level5Children = GetAllChildrenHandles(level4, "TPanel");
+                var level5 = level5Children[1];
+
+                // Second panel in the child5List holds the 6th child.
+                var level6 = FindWindowEx(level5, 0, "TPanel", null);
+
+                var level7Children = GetAllChildrenHandles(level6, "TPanel");
+                if (level7Children.Count < 1) {
+                    return;
+                }
+                var level7 = level7Children[0];
+
+                // Second panel in the child7List holds the 8th child.
+                var level8 = FindWindowEx(level7, 0, "TPanel", null);
+
+                var level9Children = GetAllChildrenHandles(level8, null);
+                if (level9Children.Count < 1) {
+                    return;
+                }
+                var level9 = level9Children[0];
+                var level10 = FindWindowEx(level9, 0, "TSyncButton", null);
+                ShowWindowAsync(level10, SW_HIDE);
             }
-            var activeWindow = GetForegroundWindow();
-            if (hwnd != activeWindow) {
-                // Delphi isn't active, no point wasting resources.
-                return;
+            catch {
+                // Don't do anything. I don't really care.
             }
-
-            var level1 = FindWindowEx(hwnd, 0, "TEditorDockPanel", null);
-            var level2 = FindWindowEx(level1, 0, "TEditWindow", null);
-            var level3 = FindWindowEx(level2, 0, "TPanel", null);
-            var level4 = FindWindowEx(level3, 0, "TPanel", null);
-
-            var level5Children = GetAllChildrenHandles(level4, "TPanel");
-            var level5 = level5Children[1];
-
-            // Second panel in the child5List holds the 6th child.
-            var level6 = FindWindowEx(level5, 0, "TPanel", null);
-
-            var level7Children = GetAllChildrenHandles(level6, "TPanel");
-            if (level7Children.Count < 1) {
-                return;
-            }
-            var level7 = level7Children[0];
-
-            // Second panel in the child7List holds the 8th child.
-            var level8 = FindWindowEx(level7, 0, "TPanel", null);
-
-            var level9Children = GetAllChildrenHandles(level8, null);
-            if (level9Children.Count < 1) {
-                return;
-            }
-            var level9 = level9Children[0];
-            var level10 = FindWindowEx(level9, 0, "TSyncButton", null);
-            ShowWindowAsync(level10, SW_HIDE);
         }
 
         private List<int> GetAllChildrenHandles(int hParent, string className) {

@@ -39,6 +39,7 @@ namespace DelphiSyncEditButtonHider.Forms {
 
                 if ((RunOnSystemStartupCheckBx.Checked) && (MinimizeToTrayCheckBx.Checked)) {
                     this.WindowState = FormWindowState.Minimized;
+                    ShowInTaskbar = false;
                 }
                 if (EnableHiderOnStartupCheckBx.Checked) {
                     FixerEnabledCheckBx.Checked = true;
@@ -110,6 +111,7 @@ namespace DelphiSyncEditButtonHider.Forms {
             if (FormWindowState.Minimized == this.WindowState) {
                 if (Properties.Settings.Default.MinimizeToTray) { 
                     notifyIcon.Visible = true;
+                    ShowInTaskbar = false;
                     if (!Properties.Settings.Default.ToolTipAlreadyShown) {
                         notifyIcon.ShowBalloonTip(500, "Delphi SyncEdit Button Hider", "DSEBH is still running in the background :)", ToolTipIcon.Info);
                         Properties.Settings.Default.ToolTipAlreadyShown = true;
@@ -119,6 +121,7 @@ namespace DelphiSyncEditButtonHider.Forms {
                 }
             } else if (FormWindowState.Normal == this.WindowState) {
                 notifyIcon.Visible = false;
+                ShowInTaskbar = true;
             }
         }
 
