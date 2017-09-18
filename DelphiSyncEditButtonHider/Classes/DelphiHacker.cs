@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
 
-namespace DelphiFixer {
-    public partial class MainFrm : Form {
+namespace DelphiSyncEditButtonHider.Classes {
+    class DelphiHacker {
 
-        public delegate bool Win32Callback(IntPtr hwnd, IntPtr lParam);
+        private delegate bool Win32Callback(IntPtr hwnd, IntPtr lParam);
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern int FindWindow(string lpClassName, string lpWindowName);
@@ -28,11 +24,7 @@ namespace DelphiFixer {
 
         private const int SW_HIDE = 0;
 
-        public MainFrm() {
-            InitializeComponent();
-        }
-
-        private void DoHideSyncButton() {
+        public void DoHideSyncButton() {
             var hwnd = FindWindow("TAppBuilder", null);
 
             if (hwnd == 0) {
@@ -58,7 +50,6 @@ namespace DelphiFixer {
 
             var level7Children = GetAllChildrenHandles(level6, "TPanel");
             if (level7Children.Count < 1) {
-                richTextBox1.AppendText("Failed to find level 7 child (level 7 children list was 0).\r\n");
                 return;
             }
             var level7 = level7Children[0];
@@ -68,7 +59,6 @@ namespace DelphiFixer {
 
             var level9Children = GetAllChildrenHandles(level8, null);
             if (level9Children.Count < 1) {
-                richTextBox1.AppendText("Failed to find level 9 child (level 9 children list was 0).\r\n");
                 return;
             }
             var level9 = level9Children[0];
@@ -86,49 +76,11 @@ namespace DelphiFixer {
                 if (currChild == 0)
                     break;
                 list.Add(currChild);
-                prevChild = currChild;;
+                prevChild = currChild; ;
             }
             while (true);
 
             return list;
-        }
-
-        private void MainFrm_Load(object sender, EventArgs e) {
-            IntervalTextBx.Text = Properties.Settings.Default.interval.ToString();
-        }
-
-        private void FixerEnabledCheckBx_CheckedChanged(object sender, EventArgs e) {
-            if (FixerEnabledCheckBx.Checked) {
-                int intInterval;
-                if (int.TryParse(IntervalTextBx.Text, out intInterval)) {
-                    HiderTmr.Interval = intInterval;
-                } else {
-                    MessageBox.Show("Could not parse the interval textbox. It needs to contain a whole number in milliseconds.");
-                    FixerEnabledCheckBx.Checked = false;
-                    return;
-                }                
-            }
-            HiderTmr.Enabled = FixerEnabledCheckBx.Checked;
-        }
-
-        private void SaveIntervalBtn_Click(object sender, EventArgs e) {
-            int intInterval;
-            if (int.TryParse(IntervalTextBx.Text, out intInterval)) {
-                Properties.Settings.Default.interval = intInterval;
-                Properties.Settings.Default.Save();
-                MessageBox.Show("Saved!");
-            } else {
-                MessageBox.Show("Could not parse the interval textbox. It needs to contain a whole number in milliseconds.");
-                return;
-            }
-        }
-
-        private void HiderTmr_Tick(object sender, EventArgs e) {
-            HiderTmr.Enabled = false;
-            DoHideSyncButton();
-            if (FixerEnabledCheckBx.Checked) {
-                HiderTmr.Enabled = true;
-            }
         }
     }
 }

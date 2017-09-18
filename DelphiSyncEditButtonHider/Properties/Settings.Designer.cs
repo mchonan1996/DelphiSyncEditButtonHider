@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DelphiFixer.Properties {
+namespace DelphiSyncEditButtonHider.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -25,13 +25,49 @@ namespace DelphiFixer.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public int interval {
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MinimizeToTray {
             get {
-                return ((int)(this["interval"]));
+                return ((bool)(this["MinimizeToTray"]));
             }
             set {
-                this["interval"] = value;
+                this["MinimizeToTray"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableHiderOnStartup {
+            get {
+                return ((bool)(this["EnableHiderOnStartup"]));
+            }
+            set {
+                this["EnableHiderOnStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ToolTipAlreadyShown {
+            get {
+                return ((bool)(this["ToolTipAlreadyShown"]));
+            }
+            set {
+                this["ToolTipAlreadyShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public int Interval {
+            get {
+                return ((int)(this["Interval"]));
+            }
+            set {
+                this["Interval"] = value;
             }
         }
     }
